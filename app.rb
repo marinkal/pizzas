@@ -21,6 +21,22 @@ get '/about' do
 end
 
 post '/cart' do
+	@cart_items = {}
+	@orders_pizza = params[:orders].split(",")
+	@orders_pizza.each do |product|
+		equalsplit = product.split('=')
+		key = equalsplit[0].split('_')[1]
+		@cart_items[key]=equalsplit[1]
 
-
+	end
+	@products = Product.all
+	erb :cart
 end
+
+post '/orders' do
+	@customer = params[:customer]
+	@phone = params[:phone]
+	@address = params[:address]
+	@products = params[:products]
+	erb :orders
+end 

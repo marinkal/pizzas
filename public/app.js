@@ -7,6 +7,11 @@ function something(){
 		//alert(x)
 }
 
+$(function(){
+	update_orders_input()
+	update_orders_button()
+})
+
 function add_to_cart(id){
 	key = 'product_'+id
 	var x = window.localStorage.getItem(key);

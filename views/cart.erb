@@ -1,0 +1,56 @@
+<h2>Your cart</h2>
+<table class="table table-striped">
+<thead>
+	<th>Product</th>
+	<th>Price</th>
+	<th>Count</th>
+	<th>Cost</th>
+</thead>
+<% total_sum=0 %>
+<% total_count=0%>
+<% products = "" %>
+<% @cart_items.each do |key,value| %>
+	<% p = Product.find(key) %>
+	<% total_sum = total_sum + p.price.to_f*value.to_f %>
+	<% total_count = total_count + value.to_f %>
+	<% products += p.title + "(" + value +"), "%>
+	<tr>
+		<td>
+			<div><%= p.title %></div>
+			<div><image src="<%=p.path_to_image%>"/></div>
+			<div><%= p.description %></div>
+			<div>size: <%= p.size %></div>
+		</td>
+		<td><div><%= p.price %> RUB</div></td>
+		<td><%= value %></td>
+		<td><div><%=p.price.to_f*value.to_f%> RUB</div></td>
+
+
+	</tr>	
+<% end %>
+<thead>
+	<tr>
+		<th> Total: </th>
+		<th></th>
+		<th><%= total_count %></th>
+		<th><%= total_sum %> RUB</th>
+	</tr>
+	</thead>
+</table>
+<form method = "post" action="/orders">
+	<div class="form-group">
+    <label>Your name:</label>
+    <input type="text" class="form-control" id="customer" name="customer" placeholder="Enter your name:">
+  </div>
+  <div class="form-group">
+    <label>Phone</label>
+    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone:">
+  </div>
+  <div class="form-group">
+    <label>Adress</label>
+    <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address:" >
+   </div>
+   <input type="hidden" name="products" value="<%=products %>">
+
+  <button type="submit" class="btn btn-primary">Get order</button>
+</form>
