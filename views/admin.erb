@@ -1,0 +1,22 @@
+<table class="table table-striped">
+	<thead>
+		<th>№</th>
+		<th>order</th>
+		<th>name</th>
+		<th>phone</th>
+		<th>adress</th>
+	</thead>
+	<% n=0 %>
+	<tbody>
+		<% @orders.each do |order| %>
+		<tr>
+			<% n+=1 %>
+			<td><%= n%></td>
+			<td><%= order.orders_input %></td>
+			<td><%= order.name %></td>
+			<td><%= order.phone%>></td>
+			<td><%= order.adress%></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

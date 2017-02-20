@@ -4,10 +4,18 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/activerecord'
 
-
+set :database, "sqlite3:pizzashop.db"
 class Product < ActiveRecord::Base
 end
-set :database, "sqlite3:pizzashop.db"
+
+class Order < ActiveRecord::Base
+end
+
+
+
+get '/cart' do
+	#erb :index
+end
 
 get '/' do
 	#erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
@@ -30,13 +38,21 @@ post '/cart' do
 
 	end
 	@products = Product.all
-	erb :cart
+
+	if @cart_items.length==0
+		erb "You cart is empty now"
+	else
+		erb :cart
+	end
 end
 
 post '/orders' do
-	@customer = params[:customer]
-	@phone = params[:phone]
-	@address = params[:address]
-	@products = params[:products]
-	erb :orders
+	@order = Order.create params[:order]
+	erb :order_placed
 end 
+
+
+get '/admin' do
+	@orders = Order.order ("id desc")
+	erb :admin
+end
